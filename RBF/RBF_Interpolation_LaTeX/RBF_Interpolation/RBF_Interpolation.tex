@@ -1,0 +1,286 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage{lmodern}
+\usepackage[croatian]{babel}
+\usepackage[margin=1.4in]{geometry}
+\usepackage[labelsep=period]{caption}
+\usepackage{graphicx}
+\usepackage{mathastext}
+\usepackage{textcomp}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{afterpage}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{epstopdf}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage{algorithm}  
+\usepackage{algorithmic}
+\usepackage{color, colortbl}
+\usetikzlibrary{trees}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[titletoc,page]{appendix}
+\usepackage[up,bf,raggedright]{titlesec}
+\usepackage{blindtext}
+
+
+\addto\captionscroatian{%
+	\def\refname{Reference}%
+	\def\bibname{Reference}%
+	\def\tablename{Tabela}%
+}%
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+	backgroundcolor=\color{white},   
+	basicstyle=\ttfamily\footnotesize,        
+	breakatwhitespace=false,        
+	breaklines=true,                
+	captionpos=b,                   
+	commentstyle=\color{mygreen},      
+	escapeinside={\%*}{*)},         
+	extendedchars=true,             
+	frame=single,	                   
+	keepspaces=true,                 
+	keywordstyle=\color{blue},       
+	language=Python,                 
+	numbers=left,                   
+	numbersep=5pt,                   
+	numberstyle=\tiny\color{mygray}, 
+	rulecolor=\color{black},        
+	showspaces=false,                
+	showstringspaces=false,         
+	showtabs=false,                  
+	stepnumber=1,                    
+	stringstyle=\color{mymauve},     
+	title=\lstname                   
+}
+
+\theoremstyle{definition}
+\newtheorem{mydef}{Definicija} [chapter]
+\newtheorem{myexp}{Primjer} [chapter]
+\newtheorem{myteo}{Teorem} [chapter]
+\newtheorem{mypro}{Dokaz} [chapter]
+\makeatletter
+\newcommand{\newalgname}[1]{%
+	\renewcommand{\ALG@name}{#1}%
+}
+
+\renewcommand{\tablename}{Tabela}
+\newalgname{Algoritam}
+\renewcommand{\listalgorithmname}{Lista\ALG@name s}
+\makeatother
+
+\begin{document}
+	\begin{titlepage}
+		\newcommand{\HRule}{\rule{\linewidth}{1mm}} 
+		\noindent
+		{\large
+			\begin{minipage}{0.2\textwidth}
+				\begin{center} 
+					\includegraphics[width=0.7\textwidth]{unsa.jpg}
+				\end{center}
+			\end{minipage}
+			\begin{minipage}{0.58\textwidth}
+				\begin{center} \large
+					Univerzitet u Sarajevu\\
+					Elektrotehnički fakultet u Sarajevu\\
+					Odsjek za računarstvo i informatiku\\
+				\end{center}
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}
+				\begin{center} 
+					\includegraphics[width=0.7\textwidth]{ETF_logo.png}
+				\end{center}
+			\end{minipage}
+			\\[6 cm] 
+			
+			
+			\begin{center}
+				\LARGE 
+				\bfseries 
+				Zadaća \textnumero \\
+				Naziv zadaće   \\[0.5cm]
+				
+				\large 
+				Predmet
+				\\[6.0 cm] 
+			\end{center}	 		
+			
+
+			\begin{minipage}{0.9\textwidth}
+				\begin{flushright}
+					\textbf{Ime i prezime:} / \\
+					\textbf{Broj indexa:} / \\			
+					\textbf{Grupa:} / \\
+					\textbf{Datum:} /
+				\end{flushright}
+			\end{minipage}\\[1 cm]
+		}
+	\end{titlepage}
+	\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+	
+	\chapter*{Teorijski uvod}
+	Algoritam koji smo odabrali za ovu temu je RBF algoritam interpolacije(Radial Basis Function Interpolation). Ovaj algoritam se zasniva na ideji da svaka poznata tačka na osnovu koje vršimo interpolaciju jednako utiče na vrijednost funkcije u svim tačkama koje su jednako udaljene od te tačke na način opisan nekom pretpostavljenom funkcijom. Formalno rečeno
+	
+	\[f(\textbf{x}) \approx \sum_{i = 1}^{N}w_i \phi(|\textbf{x} -\textbf{x}_i|)\]
+	
+	gdje u ovoj formuli $f$ predstavlja funkciju koju želimo interpolirati, N označava broj poznatih tačaka na osnovu kojih vršimo interpolaciju, dok $\textbf{x}_i$ su upravo te tačke. Označimo sa $y_i$ vrijednosti $f(\textbf{x}_i)$. Težinski koeficijenti $w_i$ predstavljaju koliko intenzivno na vrijednost funkcije u proizvoljnoj tački utiče udaljenost od tačke $\textbf{x}_i$, dok $\phi$ predstavlja pretpostavljenu radijalnu funkciju koja određuje na koji način udaljenost djeluje na tu istu vrijednost.\\
+	
+	Za funkciju $\phi$ imamo mnogo opcija mada se najčešće koristi takozvana multikvadratna funkcija koja glasi $\phi(r) = \sqrt{r^2+r_0^2}$, gdje $r_0$ predstavlja takozvani faktor skaliranja koji se tipično uzima da je veći od prosječnih udaljenosti, a manje od najvećih udaljenosti tačaka $\textbf{x}_i$. Još neke funkcije koje se mogu koristi su inverzna multikvadratna: $\phi(r) = \frac1{\sqrt{(r^2+r_0^2)}}$, gausovska: $\phi(r) = e^{-\frac{r^2}{2r_0^2}}$, thin-plate spline: $\phi(r) = r^2log(\frac{r}{r_0})$.\\
+	
+	Prirodno se još postavlja pitanje kako odrediti težinske koeficijente nakon što sto pretpostavili radijalnu funkciju. Uvrštavanjem vrijednosti $\textbf{x}_n$ u gore navedenu formulu znak $\approx$ možemo da zamijenimo znakom jednakosti jer se radi o interpolaciji, te nam to daje
+	
+	\[f(\textbf{x}_n) = \sum_{i = 1}^{N}w_i \phi(|\textbf{x}_n -\textbf{x}_i|) \qquad ,n = \overline{1,N}\]
+	
+	a ovo je ništa drugo nego sistem od $N$ linearnih jednačina sa $N$ nepoznatih($w_i$ za $i=\overline{1,N}$). Rješavanjem ovog sistema metodama za rješavanje sistema linearnih jednačina(na primjer Gaussova eliminacija) dobijamo tražene težinske koeficiente. Interpolacija se onda vrši po prvoj navedenoj formuli\\
+	
+	
+	\chapter*{Implementacija algoritma}
+	
+	\section*{Opis implementacije}	
+	
+	Algoritam je pisan u Scilabu i sastoji se od sljedečih funkcija. Za funkciju $\phi$ smo uzeli multikvadratnu funkciju.
+	\begin{itemize}
+		\item radial\_distance:\\
+		Služi za računanje udaljenosti dvije tačke n-dimenzijaonalnom prostoru koristeći standardnu formulu $\sqrt{\sum_{i=1}^N(a_i-b_i)^2}$.
+		
+		\item multiquadratic:\\
+		Računa vrijednost multikvadratne funkcije za date parametre $r$ i $r_0$.
+		
+		\item radial\_matrix:\\
+		Stvara trivijalnu matricu $R$ tako da vrijedi da je 
+		$R_{i,j}= \| \textbf{x}_i - \textbf{x}_j \|$ pozivajući radial\_distance.
+		
+		\item multiquadratic\_matrix:\\
+		Prima radijalnu matricu i primjenjuje multikvadratnu funkciju na svaki član, sa vrijednošću $r_0$ postavljenom na geometrijsku sredinu srednjeg i najvećeg elementa radijalne matrice, time ustvari računajući vrijednosti koeficijenata uz $w_i$ sistema koji se treba riješiti.
+		
+		\item point\_distance\_vector:\\
+		Prima tačku/e u kojoj/im želimo vršiti interpolaciju, kao i tečke na osnovu kojih smo vršili interpolaciju i vrijednost koeficienta $r_0$ korištenog da se izračuna multikvadratna matricai vraća horizontalni vektor, odnosno matricu u slučaju da smo vršili interpolaciju u više tačaka, koji predstavlja izračunate sve odgovarajuće vrijednosti funkcije $\phi$.
+		
+		\item RBF\_weights:\\
+		Prima tačke u kojima vršimo interpolaciju, i vrijednosti funkcije u tim tačkama, te riješava sistem preko kojeg određujemo vrijednosti težinskih koeficijeneata koristeći gore nevedene pomoćne funkcije da formira sistem.
+		
+		\item RBF\_evaluate:\\
+		Prima tačku/e u kojim se vrši interpolacija, tačke na osnovu kojih interpoliramo, vektor težinskih koeficijenata kao i $r_0$ koje smo koristili da ih izračunamo, i vraća interpoliranu vrijednost, odnosno vektor ako aproksimiramo u više tačaka.
+		
+		\item RBF\_one\_time\_evaluation:\\
+		Ova funkcija služi ako hoćemo samo jednom da interpoliramo, te samo joj prosljeđujemo tačke na osnovu kojih interpoliramo, vrijednost funkcije u njima, i tačke u kojima interpoliramo, te ona poziva RBF\_weights i RBF\_evaluate i vraća tražene vrijednosti
+		
+		\item Test:\\
+		Prima funkciju, broj argumenata, broj tačaka na osnovu kojih vršimo interpolaciju i broj tačaka u kojima interpoliramo. Stvara matrice odredjenih veličina: $X_train$ i $X_test$ i popunjava ig+h sa odgovarajučim brojem nasumičnih vrijednosti izmedju $-500$ i $500$ i računa vrijednosti funkcije u njima, nakon toga vrši se interpolaciju u $X_test$ na osnovu $X_train$ i vračaju se očekivanje(stvarne) i interpolirane vrijednosti.
+		
+	\end{itemize}
+	
+	
+	\section*{Source code}
+
+\begin{lstlisting}[language=Scilab]
+function d = radial_distance(a,b)
+    d = sqrt(sum((a-b).^2));
+endfunction	
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scilab]
+function fi = multiquadratic(r,r0)
+    fi = sqrt(r.^2+r0.^2);
+endfunction
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scilab]
+function R = radial_matrix(X)
+    [nrows, ncols] = size(X);
+    R = zeros(nrows, nrows);
+    for i = 1:nrows
+        for j = (i+1):nrows
+            R(i,j) = radial_distance(X(i,:),X(j,:));
+            R(j,i) = R(i,j);
+        end
+    end
+endfunction
+
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scilab]
+function [M, r0] = multiquadratic_matrix(X)
+    r0 = sqrt(mean(X) * max(X));
+    M = multiquadratic(X, r0);
+endfunction
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scilab]
+function W1 = point_distance_vector(A, X, r0)
+    [xrows,xcols] = size(X);
+    [arows,acols] = size(A);
+    W1 = zeros(arows, xrows);
+    for i = 1:arows
+        for j = 1:xrows
+            W1(i,j) = radial_distance(A(i,:), X(j,:));
+        end
+    end
+    W1 = multiquadratic(W1, r0);
+endfunction
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scilab]
+function [W, r0] = RBF_weights(X,Y)
+    [W1, r0] = multiquadratic_matrix(radial_matrix(X));
+    W = linsolve(W1,-Y);
+endfunction
+\end{lstlisting}
+			
+\begin{lstlisting}[language=Scilab]
+function Est = RBF_evaluate(A, X, W, r0)
+    Est = point_distance_vector(A,X,r0) * W;
+endfunction	
+\end{lstlisting}
+
+\begin{lstlisting}[language=Scilab]
+function Est = RBF_one_time_evaluation(X, Y, A)
+    [W, r0] = RBF_weights(X,Y);
+    Est = RBF_evaluate(A, X, W, r0);
+endfunction
+\end{lstlisting}
+			
+\begin{lstlisting}[language=Scilab]
+function [y_test, y_pred] = Test(f, nargs, train_size, test_size)
+    X_train = rand(train_size, nargs) * 1000 - 500;
+    X_test = rand(test_size, nargs) * 1000 - 500;
+    y_train = zeros(train_size, 1);
+    y_test = zeros(test_size, 1);
+    y_pred = zeros(test_size, 1);
+    for i=1:train_size
+        y_train(i) = f(X_train(i,:));
+    end
+    for i=1:test_size
+        y_test(i) = f(X_test(i,:));
+    end    
+    y_pred = RBF_one_time_evaluation(X_train, y_train, X_test);
+endfunction
+\end{lstlisting}
+		
+	\section*{Testiranje}
+	
+	Obavljene su 3 faze testiranja:\\
+	
+	Prva faza koristi jednostavna funkciju $f(a,b,c)=a+b+c$ sa 10 poznatih tačaka, i računanjem u 10 nepoznatih tačaka. Srednja apsolutna vrijednost greške je $27.883985$, dok je standardna devijacija $27.177035$. Ako isti postupak ponovimo za 100 tačaka umijesto 10(i poznatih i traženih) Srednja vrijednost i standardna devijacija glase redom $0.7763442$ i $1.0250536$.\\
+	
+	Druga faza koristi funkciju glasi $f(a,b,c)=a*b+c$ sa 100 poznatih i 1000 traženih tačaka. Srednja vrijednost apsolutne greške i njena standardna devijacija glase $4138.8169$ i $3997.0845$. Iako su oe vrijednosti velike, apsolutna vrijednost funkcije u prosjeku je oko $6*10^5$ te ovo nije ni $10\%$ relativna greška.\\
+	
+	Treča faza koristi funkciju $f(a,b,c,d,e)=a+sin(b)+ln(c)+2107$ sa 100 poznatih i 100 traženih i onda daje srednju vrijednost i standardnu devijaciju apsolutne greške da glase redom $6.8748745$ i $5.1381267$ dok prosječna apsolutna vrijednost iznosi oko $2000$.\\
+		
+\chapter*{Zaključci i diskusija}
+
+ALdine ja ću dodat optimizaciju i komplesnost koda i tmožes ostalo sve, smao pls uredi.\\
+Komplesknost izvršavanja algoritma pri određivanju težina je $O(n^3)$ zbog rješavanja sistema, dok je kod interpolacije jedna tačke $O(n)$.
+
+Odrađivanje $r_0$ smo izvršili uzimanjem geometrijske sredine, mada uz ispravan odabir $r_0$ preciznos se može povećati, odnosno smanjiti za vise redova veličine, te je moguće da jednu ili više tačaka na osnovu kojih interpoliramo izbacimo iz skupa na osnovu kojeg računamo težine, i onda provjeravamo rezultate za različito $r_0$ u tim tačkama.
+
+\end{document}
